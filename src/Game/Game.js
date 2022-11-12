@@ -1,6 +1,18 @@
+let instance = null;
+
 export default class Game {
+
   constructor(canvas) {
+
+    if(instance != null) {
+      return instance;
+    }
+
+    instance = this;
+
     this.canvas = canvas;
-    console.log(this.canvas);
+    this.ctx = this.canvas.getContext('2d');
+    
   }
+  
 }
