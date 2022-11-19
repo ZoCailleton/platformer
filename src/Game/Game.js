@@ -13,7 +13,7 @@ export default class Game {
 		instance = this
 
 		this.canvas = canvas
-		this.context = canvas.getContext('2d')
+		this.context = this.canvas.getContext('2d')
 
 		this.canvas.width = 64 * 16
 		this.canvas.height = 64 * 9
@@ -24,6 +24,17 @@ export default class Game {
 		this.player = new Player()
 
 		this.tick()
+
+		window.addEventListener('keydown', e => {
+			switch(e.key) {
+				case 'ArrowUp':
+					if(this.player.velocity.y === 0) this.player.velocity.y = -20
+					break
+				case 'ArrowDown':
+					console.log(e.key)
+					break
+			}
+		})
 
 	}
 

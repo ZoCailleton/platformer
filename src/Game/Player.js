@@ -8,10 +8,16 @@ export default class Player {
 
     this.width = 100
     this.height = 100
+    this.gravity = 1
 
     this.position = {
       x: 100,
       y: 100
+    }
+
+    this.velocity = {
+      x: 0,
+      y: 0
     }
 
     this.sides = {
@@ -26,10 +32,16 @@ export default class Player {
   }
 
   update() {
-    if(this.sides.bottom < this.game.canvas.height) {
-      this.position.y++
-      this.sides.bottom = this.position.y + this.height
+
+    this.position.y += this.velocity.y
+    this.sides.bottom = this.position.y + this.height
+
+    if(this.sides.bottom + this.velocity.y < this.game.canvas.height) {
+      this.velocity.y += this.gravity
+    } else {
+      this.velocity.y = 0
     }
+
   }
 
 }
