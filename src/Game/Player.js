@@ -1,25 +1,35 @@
-import Game from "./Game";
+import Game from "./Game"
 
 export default class Player {
 
   constructor() {
 
-    this.game = new Game();
+    this.game = new Game()
 
-    this.player = {
+    this.width = 100
+    this.height = 100
+
+    this.position = {
       x: 100,
       y: 100
     }
 
-    this.width = 100;
-    this.height = 100;
+    this.sides = {
+      bottom: this.position.y + this.height
+    }
 
-    this.draw();
-    
   }
 
   draw() {
-    this.game.ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+    this.game.context.fillStyle = 'red'
+    this.game.context.fillRect(this.position.x, this.position.y, this.width, this.height)
+  }
+
+  update() {
+    if(this.sides.bottom < this.game.canvas.height) {
+      this.position.y++
+      this.sides.bottom = this.position.y + this.height
+    }
   }
 
 }
