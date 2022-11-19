@@ -23,6 +23,3 @@ export default class Player {
   }
 
 }
-
-const player = new Player();
-player.draw();
