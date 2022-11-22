@@ -1,6 +1,7 @@
 import Player from './Player'
 import EventListener from './EventListener'
 import Sprite from './Sprite'
+import { collisionBlocks } from '../data/collisions'
 
 let instance = null
 
@@ -27,7 +28,8 @@ export default class Game {
 			position: {
 				x: 0,
 				y: 0
-			}
+			},
+			imageSrc: './assets/backgroundLevel1.png'
 		})
 
 		this.player = new Player()
@@ -47,6 +49,8 @@ export default class Game {
 		new EventListener()
 
 		this.tick()
+
+		console.log(collisionBlocks)
 
 	}
 

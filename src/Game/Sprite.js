@@ -2,11 +2,15 @@ import Game from "./Game"
 
 export default class Sprite {
 
-	constructor({position}) {
+	constructor({ position, imageSrc }) {
 		this.game = new Game()
 		this.position = position
 		this.image = new Image()
-		this.image.src = './assets/backgroundLevel1.png'
+		this.image.onload = () => {
+			this.loaded = true
+		}
+		this.image.src = imageSrc
+		this.loaded = false
 	}
 
 	draw() {
