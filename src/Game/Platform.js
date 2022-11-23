@@ -11,7 +11,7 @@ export default class Platform {
 			y: 100
 		}
 		this.width = 200
-		this.height = 20
+		this.height = 50
 	}
 	
 	draw() {

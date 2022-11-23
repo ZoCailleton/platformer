@@ -74,9 +74,18 @@ export default class Game {
 		this.player.update()
 		this.platform.draw()
 
-		if(this.keys.left.pressed) this.player.velocity.x = -this.player.speed
-		else if(this.keys.right.pressed) this.player.velocity.x = this.player.speed
-		else this.player.velocity.x = 0
+		if(this.keys.left.pressed && this.player.position.x > 100) {
+			this.player.velocity.x = -this.player.speed
+		} else if(this.keys.right.pressed && this.player.position.x < 400) {
+			this.player.velocity.x = this.player.speed
+		} else {
+			this.player.velocity.x = 0
+			if(this.keys.right.pressed) {
+				this.platform.position.x -= 5
+			} else if(this.keys.left.pressed) {
+				this.platform.position.x += 5
+			}
+		}
 
 		// Platform detection
 		if(
