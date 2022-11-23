@@ -19,14 +19,22 @@ export default class Game {
 			height: 0
 		}
 
+		this.scrollOffset = 0
+
 		this.canvas = canvas
 		this.context = this.canvas.getContext('2d')
 
 		this.context.fillStyle = 'white'
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 
+		const image = new Image()
+		image.src = './assets/platform.png'
+
 		this.player = new Player()
-		this.platform = new Platform()
+		this.platforms = [
+			new Platform({x: image.width, y: 450, image}),
+			new Platform({x: 500, y: 200, image}),
+		]
 
 		this.keys = {
 			left: {
@@ -72,7 +80,10 @@ export default class Game {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
 		this.player.update()
-		this.platform.draw()
+
+		this.platforms.forEach(platform => {
+			platform.draw()
+		})
 
 		if(this.keys.left.pressed && this.player.position.x > 100) {
 			this.player.velocity.x = -this.player.speed
@@ -80,21 +91,36 @@ export default class Game {
 			this.player.velocity.x = this.player.speed
 		} else {
 			this.player.velocity.x = 0
+			
 			if(this.keys.right.pressed) {
-				this.platform.position.x -= 5
+				this.scrollOffset += 5
+				this.platforms.forEach(platform => {
+					platform.position.x -= 5
+				})
 			} else if(this.keys.left.pressed) {
-				this.platform.position.x += 5
+				this.scrollOffset -= 5
+				this.platforms.forEach(platform => {
+					platform.position.x += 5
+				})
 			}
 		}
 
 		// Platform detection
-		if(
-			this.player.position.y + this.player.height <= this.platform.position.y
-			&& this.player.position.y + this.player.height + this.player.velocity.y >= this.platform.position.y
-			&& this.player.position.x + this.player.width >= this.platform.position.x
-			&& this.player.position.x <= this.platform.position.x + this.platform.width
-		) {
-			this.player.velocity.y = 0
+		this.platforms.forEach(platform => {
+			
+			if(
+				this.player.position.y + this.player.height <= platform.position.y
+				&& this.player.position.y + this.player.height + this.player.velocity.y >= platform.position.y
+				&& this.player.position.x + this.player.width >= platform.position.x
+				&& this.player.position.x <= platform.position.x + platform.width
+			) {
+				this.player.velocity.y = 0
+			}
+			
+		})
+
+		if(this.scrollOffset > 2000) {
+			console.log('You win')
 		}
 
 	}
