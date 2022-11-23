@@ -6,6 +6,8 @@ export default class Player {
 
     this.game = new Game()
 
+    this.speed = 15
+
     this.position = {
       x: 100,
       y: 100
@@ -34,12 +36,11 @@ export default class Player {
 
   update() {
 
+    this.position.x += this.velocity.x
     this.position.y += this.velocity.y
     if(this.position.y + this.height + this.velocity.y <= this.game.canvas.height) {
       this.velocity.y += this.gravity
-    } else {
-      
-    }
+    } else this.velocity.y = 0
 
     this.draw()
 

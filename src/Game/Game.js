@@ -59,7 +59,7 @@ export default class Game {
 
 		this.canvas.style.width = this.sizes.width
 		this.canvas.style.height = this.sizes.height
-		this.canvas.style.backgroundColor = '#eee'
+		this.canvas.style.backgroundColor = '#aaa'
 
 	}
 
@@ -74,11 +74,17 @@ export default class Game {
 		this.player.update()
 		this.platform.draw()
 
-		if(this.keys.left.pressed) this.player.velocity.x = -5
-		else if(this.keys.right.pressed) this.player.velocity.x = 5
+		if(this.keys.left.pressed) this.player.velocity.x = -this.player.speed
+		else if(this.keys.right.pressed) this.player.velocity.x = this.player.speed
 		else this.player.velocity.x = 0
 
-		if(this.player.position.y + this.player.height <= platform.position.y) {
+		// Platform detection
+		if(
+			this.player.position.y + this.player.height <= this.platform.position.y
+			&& this.player.position.y + this.player.height + this.player.velocity.y >= this.platform.position.y
+			&& this.player.position.x + this.player.width >= this.platform.position.x
+			&& this.player.position.x <= this.platform.position.x + this.platform.width
+		) {
 			this.player.velocity.y = 0
 		}
 
