@@ -1,7 +1,7 @@
 import Player from './Player'
 import EventListener from './EventListener'
 import Sprite from './Sprite'
-import { collisionBlocks } from '../data/collisions'
+//import { collisionBlocks } from '../data/collisions'
 
 let instance = null
 
@@ -15,11 +15,13 @@ export default class Game {
 		
 		instance = this
 
+		this.sizes = {
+			width: 0,
+			height: 0
+		}
+
 		this.canvas = canvas
 		this.context = this.canvas.getContext('2d')
-
-		this.canvas.width = 64 * 16
-		this.canvas.height = 64 * 9
 
 		this.context.fillStyle = 'white'
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
@@ -48,9 +50,19 @@ export default class Game {
 
 		new EventListener()
 
+		this.updateSizes()
+
 		this.tick()
 
-		console.log(collisionBlocks)
+	}
+
+	updateSizes() {
+
+		this.sizes.width = window.innerWidth
+		this.sizes.height = window.innerHeight
+
+		this.canvas.width = this.width
+		this.canvas.height = this.height
 
 	}
 
