@@ -1,7 +1,6 @@
 import Player from './Player'
 import EventListener from './EventListener'
-import Sprite from './Sprite'
-//import { collisionBlocks } from '../data/collisions'
+import Platform from './Platform'
 
 let instance = null
 
@@ -26,20 +25,10 @@ export default class Game {
 		this.context.fillStyle = 'white'
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 
-		this.backgroundLevel1 = new Sprite({
-			position: {
-				x: 0,
-				y: 0
-			},
-			imageSrc: './assets/backgroundLevel1.png'
-		})
-
 		this.player = new Player()
+		this.platform = new Platform()
 
 		this.keys = {
-			top: {
-				pressed: false
-			},
 			left: {
 				pressed: false
 			},
@@ -52,6 +41,10 @@ export default class Game {
 
 		this.updateSizes()
 
+		window.addEventListener('resize', () => {
+			this.updateSizes()
+		})
+
 		this.tick()
 
 	}
@@ -61,27 +54,33 @@ export default class Game {
 		this.sizes.width = window.innerWidth
 		this.sizes.height = window.innerHeight
 
-		this.canvas.width = this.width
-		this.canvas.height = this.height
+		this.canvas.width = this.sizes.width
+		this.canvas.height = this.sizes.height
+
+		this.canvas.style.width = this.sizes.width
+		this.canvas.style.height = this.sizes.height
+		this.canvas.style.backgroundColor = '#eee'
 
 	}
 
 	tick() {
 
-		window.requestAnimationFrame(() => {
+		requestAnimationFrame(() => {
 			this.tick()
 		})
-		this.context.fillStyle = 'white'
-		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
 
-		this.backgroundLevel1.draw()
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
-		this.player.velocity.x = 0
+		this.player.update()
+		this.platform.draw()
+
 		if(this.keys.left.pressed) this.player.velocity.x = -5
 		else if(this.keys.right.pressed) this.player.velocity.x = 5
+		else this.player.velocity.x = 0
 
-		this.player.draw()
-		this.player.update()
+		if(this.player.position.y + this.player.height <= platform.position.y) {
+			this.player.velocity.y = 0
+		}
 
 	}
 

@@ -8,7 +8,7 @@ export default class EventListener {
 		window.addEventListener('keydown', e => {
 			switch(e.key) {
 				case 'ArrowUp':
-					if(this.game.player.velocity.y === 0) this.game.player.velocity.y = -20
+					this.game.player.velocity.y = -20
 					break
 			case 'ArrowLeft':
 					this.game.keys.left.pressed = true
