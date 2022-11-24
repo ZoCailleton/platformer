@@ -33,8 +33,16 @@ export default class Game {
 
 		this.player = new Player()
 		this.platforms = [
-			new Platform({x: image.width, y: 450, image}),
-			new Platform({x: 500, y: 200, image}),
+			new Platform({
+				x: image.width,
+				y: 450,
+				image
+			}),
+			new Platform({
+				x: 500,
+				y: 200,
+				image
+			}),
 		]
 
 		this.background = new Sprite({
