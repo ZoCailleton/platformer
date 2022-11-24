@@ -1,6 +1,7 @@
 import Player from './Player'
 import EventListener from './EventListener'
 import Platform from './Platform'
+import Sprite from './Sprite'
 
 let instance = null
 
@@ -35,6 +36,14 @@ export default class Game {
 			new Platform({x: image.width, y: 450, image}),
 			new Platform({x: 500, y: 200, image}),
 		]
+
+		this.background = new Sprite({
+			position: {
+				x: 0,
+				y: 0
+			},
+			imageSrc: './assets/background.png'
+		})
 
 		this.keys = {
 			left: {
@@ -77,8 +86,13 @@ export default class Game {
 			this.tick()
 		})
 
-		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
-
+		this.context.fillStyle = 'white'
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
+		
+		this.context.save()
+		this.context.scale(4, 4)
+		this.background.update()
+		this.context.restore()
 		this.player.update()
 
 		this.platforms.forEach(platform => {

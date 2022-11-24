@@ -8,10 +8,9 @@ export default class Platform {
 
 		this.position = { x, y }
 
-		this.width = 200
-		this.height = 50
-
 		this.image = image
+		this.width = this.image.width
+		this.height = this.image.height
 
 	}
 	
